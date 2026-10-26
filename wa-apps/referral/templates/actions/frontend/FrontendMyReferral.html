@@ -1,0 +1,40 @@
+<div class="referral">
+    <h1>Приведи друга</h1>
+
+    <p>Ваш бонусный счёт: <b>{$account.balance}</b></p>
+
+    <form id="referral-code" method="post" action="code/">
+        {if $account.code}
+            <p>Ваша ссылка: <code>/r/{$account.code}/</code></p>
+        {else}
+            <button type="submit">Получить код</button>
+        {/if}
+    </form>
+
+    <form id="referral-invite" method="post" action="invite/">
+        <input type="email" name="email" placeholder="E-mail друга">
+        <textarea name="message" placeholder="Сообщение"></textarea>
+        <button type="submit">Пригласить</button>
+    </form>
+
+    <form id="referral-notify" method="post" action="notify/">
+        <input type="text" name="url" placeholder="Адрес для уведомлений" value="{$account.notify_url}">
+        <button type="submit">Сохранить и проверить</button>
+    </form>
+
+    <input type="search" id="referral-search" placeholder="Поиск по e-mail">
+
+    <div id="referral-list">
+        {foreach $invites as $i}
+            <div class="invite">
+                <h3><a href="invite/{$i.id}/">{$i.email}</a></h3>
+                <p>{$i.message}</p>
+                <span class="status">{$i.status}</span>
+            </div>
+        {foreachelse}
+            <p>Приглашений пока нет.</p>
+        {/foreach}
+    </div>
+</div>
+
+<script src="{$wa_app_static_url}js/referral.js"></script>
